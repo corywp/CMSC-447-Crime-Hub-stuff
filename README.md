@@ -7,9 +7,9 @@ Install all python dependencies
 $ pip install -r requirements.txt
 ```
 
-Start the flask app
+Start the flask app (run from anywhere in website directory)
 ```
-$ python run.py
+$ flask run
 ```
 
 Will be hosted on `http://127.0.0.1:5000/`
