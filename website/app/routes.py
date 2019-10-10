@@ -1,14 +1,14 @@
 from flask import render_template
 from app import app
+import requests
+import json
+
+url = "https://data.baltimorecity.gov/resource/wsfq-mvij.json?crimedate=2019-09-14"
 
 @app.route('/')
 @app.route('/index/')
 def index():
-    members = [
-        {'first_name': 'Chloe', 'last_name': 'Jew'},        
-        {'first_name': 'Kendall', 'last_name': 'Kempton'},
-        {'first_name': 'Tj', 'last_name': 'Ngo'},
-        {'first_name': 'Cory', 'last_name': 'Powell'},
-        {'first_name': 'Scott', 'last_name': 'Keegan'}
-    ]
-    return render_template('index.html', title='Home', members=members)
+    resp = requests.get(url)
+    data = resp.json()
+    #data = list(data)[0:10]
+    return render_template('index.html', title='Home', data=data)
