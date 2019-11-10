@@ -3,3 +3,4 @@ flask-migrate
 flask-sqlalchemy
 mysql-python
 python-dotenv
+alembic

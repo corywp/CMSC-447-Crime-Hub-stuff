@@ -1,2 +1,0 @@
-tmp = __import__('flask-backend')
-globals().update(vars(tmp))

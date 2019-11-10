@@ -1,8 +1,0 @@
-{% extends "base.html" %}
-
-{% block content %}
-    <h1>Members of group 9:</h1>
-    {% for member in members %}
-    <div><p>{{ member.last_name }}, {{ member.first_name }}</p></div>
-    {% endfor %}
-{% endblock %}
