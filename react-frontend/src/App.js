@@ -2,6 +2,7 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import {BarChart} from 'react-easy-chart';
+import Chart from './Chart'
 
 var origin = window.location.origin;
 var url = origin + '/api/crimes'
@@ -49,6 +50,8 @@ class GetCrimes extends React.Component {
     } else {
       return (
         <div className="App">
+        <Chart data={data}/>
+        {/*
         <BarChart
         data={[
           {x: 'A', y: 20},
@@ -68,6 +71,7 @@ class GetCrimes extends React.Component {
               </li>
             ))}
           </ul>
+          */}
         </div>
       )
     }
