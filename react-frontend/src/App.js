@@ -50,8 +50,9 @@ class GetCrimes extends React.Component {
     } else {
       return (
         <div className="App">
-        <Chart data={data}/>
         {/*
+        <Chart data={data}/>
+
         <BarChart
         data={[
           {x: 'A', y: 20},
@@ -63,15 +64,17 @@ class GetCrimes extends React.Component {
           {x: 'G', y: 5}
         ]}
         />
+
         <p>My Token = {window.token}</p>
+        */}
         <ul>
             {data.map(data => (
               <li key={data.post}>
-                {data.crimedate} {data.crimetime}
+                {data.crimedate} {data.crimetime} {data.description} {data.weapon}
               </li>
             ))}
           </ul>
-          */}
+
         </div>
       )
     }
