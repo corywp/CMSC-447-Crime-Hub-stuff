@@ -21,7 +21,7 @@ class GetCrimes extends React.Component {
 
 
   componentDidMount() {
-    fetch("http://127.0.0.1:3000/api/crimes")
+    fetch("http://52.206.59.30:3000/api/crimes")
       .then(res => res.json())
       .then(
         (result) => {
