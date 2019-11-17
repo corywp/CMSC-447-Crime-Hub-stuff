@@ -4,4 +4,5 @@ flask_backend/app/templates/index.html
 react_frontend/node_modules
 
 # Ignore compiled python elements
-flask_backend/__pycache__
+flask_backend/app/__pycache__
+flask_backend/migrations/__pycache__
