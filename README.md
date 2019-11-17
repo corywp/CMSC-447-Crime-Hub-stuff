@@ -6,8 +6,15 @@ Install all python dependencies
 ```
 $ pip install -r requirements.txt
 ```
-
-Start the flask app (run from anywhere in website/ directory)
+cd into react_frontend and install npm
+```
+$ npm install
+```
+build react component
+```
+$ npm run build
+```
+cd into flask_backend and start the flask app
 ```
 $ flask run -h 0.0.0.0 -p 3000
 ```
