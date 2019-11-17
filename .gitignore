@@ -1,4 +1,6 @@
-# Ignore static
-flask_backend/app/static
+# Ignore static react folder
+flask_backend/app/static/react
+# Ignore compiled index.html template
+flask_backend/app/templates/index.html
 # Ignore node_modules folder
 node_modules
