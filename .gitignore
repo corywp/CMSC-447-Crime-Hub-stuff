@@ -1,0 +1,4 @@
+# Ignore static
+flask_backend/app/static
+# Ignore node_modules folder
+node_modules
