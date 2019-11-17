@@ -1,6 +1,7 @@
-# Ignore static react folder
+# Ignore compiled react elements
 flask_backend/app/static/react
-# Ignore compiled index.html template
 flask_backend/app/templates/index.html
-# Ignore node_modules folder
 react_frontend/node_modules
+
+# Ignore compiled python elements
+flask_backend/__pycache__
