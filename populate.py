@@ -3,7 +3,7 @@ import json
 from datetime import datetime
 from datetime import timedelta
 
-base_url = "http://0.0.0.0:3000/"
+base_url = "http://52.206.59.30:3000/"
 api_url = base_url + "api/crimes/"
 
 data_url = "https://data.baltimorecity.gov/resource/wsfq-mvij.json"
