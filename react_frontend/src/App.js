@@ -1,10 +1,9 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import {BarChart} from 'react-easy-chart';
-import Chart from './Chart'
-import {XYPlot, XAxis, YAxis, VerticalGridLines, HorizontalGridLines, LineSeries} from 'react-vis';
-
+import BarGraph from './BarGraph.js';
+import LineGraph from './LineGraph.js';
+import PieGraph from './PieGraph.js';
 var origin = window.location.origin;
 var url = origin + '/api/crimes'
 
@@ -21,7 +20,7 @@ class GetCrimes extends React.Component {
 
 
   componentDidMount() {
-    fetch("http://52.206.59.30:3000/api/crimes")
+    fetch("http://127.0.0.1:3000/api/crimes")
       .then(res => res.json())
       .then(
         (result) => {
@@ -68,22 +67,15 @@ class GetCrimes extends React.Component {
 
       return (
         <div className="App">
-        <XYPlot
-            xType="ordinal"
-            width={1000}
-            height={500}>
-            <VerticalGridLines />
-            <HorizontalGridLines />
-            <XAxis title="Period of time" />
-            <YAxis title="Number of Crimes" />
-                <LineSeries
-                    data={xydata}
-                    color="violet"
-                    strokeWidth="3"
-                    // fill="none"
-                    // style={{stroke: 'violet', strokeWidth: 3}}
-                    />
-        </XYPlot>
+        <div>
+          <BarGraph/>
+        </div>
+        <div>
+          <LineGraph/>
+        </div>
+        <div>
+          <PieGraph/>
+        </div>
         <ul>
             {data.map(data => (
               <li key={data.post}>
