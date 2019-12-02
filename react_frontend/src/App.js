@@ -4,6 +4,7 @@ import './App.css';
 import BarGraph from './BarGraph.js';
 import LineGraph from './LineGraph.js';
 import PieGraph from './PieGraph.js';
+import Map from './Map.js';
 var origin = window.location.origin;
 var url = origin + '/api/crimes'
 
@@ -67,6 +68,9 @@ class GetCrimes extends React.Component {
 
       return (
         <div className="App">
+        <div>
+        <Map/>
+        </div>
         <div>
           <BarGraph/>
         </div>
