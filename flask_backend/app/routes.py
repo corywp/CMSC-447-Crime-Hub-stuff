@@ -1,6 +1,7 @@
 from flask import render_template, jsonify, request
 from app import app, db
 from app.models import Crime
+import json
 
 
 @app.route('/')
@@ -26,8 +27,39 @@ def all_crimes():
     # Retrieve all Crime objects in database
     if request.method == 'GET':
         qryresult = db.session.query(Crime).all()
-        # Return list of retrieved objects
-        return jsonify([i.serialized for i in qryresult])
+
+        # Return list of retrieved objects in addition to metadata for filtering
+        neighborhood_names = []
+        unique_crime_types = []
+        overall_crime_count_by_district = {}
+        crimes = []
+
+        for result in qryresult:
+            crime = result.__dict__
+            crime.pop('_sa_instance_state', None)
+            if None in crime:
+                print("bad")
+            crimes.append(crime)
+
+            if 'description' in crime and crime['description'] not in unique_crime_types and crime['description']:
+                unique_crime_types.append(crime['description'])
+
+            if 'neighborhood' in crime and crime['neighborhood']:
+                if crime['neighborhood'] not in neighborhood_names:
+                    neighborhood_names.append(crime['neighborhood'])
+
+                if crime['neighborhood'] not in overall_crime_count_by_district.keys():
+                    overall_crime_count_by_district[crime['neighborhood']] = 1
+                else:
+                    overall_crime_count_by_district[crime['neighborhood']] = overall_crime_count_by_district[crime['neighborhood']] + 1
+
+        data = {}
+        data['crimes'] = crimes
+        data['neighborhood_names'] = neighborhood_names
+        data['unique_crime_types'] = unique_crime_types
+        data['overall_crime_count_by_district'] = overall_crime_count_by_district
+
+        return jsonify(data)
 
     # Add new crime object to database
     if request.method == 'POST':
