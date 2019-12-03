@@ -30,15 +30,18 @@ def all_crimes():
 
         # Return list of retrieved objects in addition to metadata for filtering
         neighborhood_names = []
-        unique_crime_types = []
         overall_crime_count_by_district = {}
+
+        unique_crime_types = []
+
+        unique_weapon_types = []
+        crime_count_by_weapon_type = {}
+
         crimes = []
 
         for result in qryresult:
             crime = result.__dict__
             crime.pop('_sa_instance_state', None)
-            if None in crime:
-                print("bad")
             crimes.append(crime)
 
             if 'description' in crime and crime['description'] not in unique_crime_types and crime['description']:
@@ -53,11 +56,22 @@ def all_crimes():
                 else:
                     overall_crime_count_by_district[crime['neighborhood']] = overall_crime_count_by_district[crime['neighborhood']] + 1
 
+            if 'weapon' in crime and crime['weapon']:
+                if crime['weapon'] not in unique_weapon_types:
+                    unique_weapon_types.append(crime['weapon'])
+
+                if crime['weapon'] not in crime_count_by_weapon_type.keys():
+                    crime_count_by_weapon_type[crime['weapon']] = 1
+                else:
+                    crime_count_by_weapon_type[crime['weapon']] = crime_count_by_weapon_type[crime['weapon']] + 1
+
         data = {}
         data['crimes'] = crimes
         data['neighborhood_names'] = neighborhood_names
         data['unique_crime_types'] = unique_crime_types
         data['overall_crime_count_by_district'] = overall_crime_count_by_district
+        data['unique_weapon_types'] = unique_weapon_types
+        data['crime_count_by_weapon_type'] = crime_count_by_weapon_type
 
         return jsonify(data)
 
