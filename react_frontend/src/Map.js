@@ -1,7 +1,17 @@
 import React, { Component } from 'react';
+import Select, { components } from 'react-select';
 import GoogleMapReact from 'google-map-react';
 
 const AnyReactComponent = ({ text }) => <div>{text}</div>;
+const DropdownIndicator = (
+  props: ElementConfig<typeof components.DropdownIndicator>
+) => {
+  return (
+    <components.DropdownIndicator {...props}>
+    </components.DropdownIndicator>
+  );
+};
+
 var origin = window.location.origin;
 var url = origin + '/api/crimes'
 var g = [
@@ -15,7 +25,9 @@ class Map extends Component {
     this.state = {
       error: null,
       isLoaded: false,
-      data: []
+      data: [],
+      selectedOption: null
+
     };
   }
   static defaultProps = {
@@ -28,10 +40,11 @@ class Map extends Component {
   positions: [
   ],
   options: {
-    radius: 50,
+    radius: 89,
     gradient: g,
   }
-  }
+},
+  typeOptions: [],
 }
 componentDidMount() {
   fetch("http://127.0.0.1:3000/api/crimes")
@@ -54,6 +67,7 @@ componentDidMount() {
       }
     )
 }
+
   render() {
     const { error, isLoaded, data } = this.state;
     if (error) {
@@ -62,17 +76,27 @@ componentDidMount() {
       return <div>Loading...</div>;
     } else {
           var xydata = [];
+          var filterData = [];
           var unique_weapon_types = "";
           var crime_count_by_weapon_type = 0;
           for (var i = 0; i < data.crimes.length; i++) {
           var newdata = {lat: data.crimes[i]["latitude"], lng: data.crimes[i]["longitude"]};
-          xydata.push(newdata);
+            if(this.state.selectedOption === null)
+            {
+              xydata.push(newdata);
+            }
           }
         this.props.data["positions"] = [... xydata];
-        console.log(this.props.data);
+
+        for (var i = 0; i < data.unique_crime_types.length; i++) {
+          var pushdata = {value: data.unique_crime_types[i], label: data.unique_crime_types[i]};
+        filterData.push(pushdata);
+        }
+        this.props.typeOptions = [... filterData];
+        console.log(this.state.selectedOption);
     return (
       // Important! Always set the container height explicitly
-      <div style={{ height: '100vh', width: '100%' }}>
+      <div style={{ height: '80vh', width: '75%' }}>
         <GoogleMapReact
           bootstrapURLKeys={{ key: "AIzaSyC35-l6-ZU04_xf6l_mIUcbFPT9lWzhxq0" }}
           defaultCenter={this.props.center}
@@ -81,7 +105,14 @@ componentDidMount() {
           heatmap={this.props.data}
         >
         </GoogleMapReact>
+        <Select
+          closeMenuOnSelect={false}
+          components={{ DropdownIndicator }}
+          isMulti
+          options={this.props.typeOptions}
+        />
       </div>
+
     );
   }
 }

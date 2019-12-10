@@ -35,7 +35,6 @@ class BarGraph extends React.Component{
   }
 
       makeGraph() {
-        console.log(this.state.graphData);
         var data = {
           label: 'Weapon Distribution',
           values: this.state.graphData
