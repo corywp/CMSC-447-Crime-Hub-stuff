@@ -65,7 +65,6 @@ class GetCrimes extends React.Component {
 
         total_crimes += 1;
       }
-
       return (
         <div className="App">
         <div>
@@ -80,14 +79,8 @@ class GetCrimes extends React.Component {
         <div>
           <PieGraph/>
         </div>
-        <ul>
-            {data.map(data => (
-              <li key={data.post}>
-                {data.crimedate} {data.crimetime} {data.description} {data.weapon}
-              </li>
-            ))}
-          </ul>
         </div>
+
       )
     }
   }
