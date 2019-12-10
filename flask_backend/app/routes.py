@@ -1,8 +1,8 @@
 from flask import render_template, jsonify, request
 from app import app, db
-from app.models import Crime
+from app.models import Crime, Weekday, Description, Weapon
+from app.models import District, Neighborhood, Premise
 import json
-
 
 @app.route('/')
 @app.route('/index')
@@ -26,52 +26,22 @@ def all_crimes():
 
     # Retrieve all Crime objects in database
     if request.method == 'GET':
-        qryresult = db.session.query(Crime).all()
-
-        # Return list of retrieved objects in addition to metadata for filtering
-        neighborhood_names = []
-        overall_crime_count_by_district = {}
-
-        unique_crime_types = []
-
-        unique_weapon_types = []
-        crime_count_by_weapon_type = {}
-
-        crimes = []
-
-        for result in qryresult:
-            crime = result.__dict__
-            crime.pop('_sa_instance_state', None)
-            crimes.append(crime)
-
-            if 'description' in crime and crime['description'] not in unique_crime_types and crime['description']:
-                unique_crime_types.append(crime['description'])
-
-            if 'neighborhood' in crime and crime['neighborhood']:
-                if crime['neighborhood'] not in neighborhood_names:
-                    neighborhood_names.append(crime['neighborhood'])
-
-                if crime['neighborhood'] not in overall_crime_count_by_district.keys():
-                    overall_crime_count_by_district[crime['neighborhood']] = 1
-                else:
-                    overall_crime_count_by_district[crime['neighborhood']] = overall_crime_count_by_district[crime['neighborhood']] + 1
-
-            if 'weapon' in crime and crime['weapon']:
-                if crime['weapon'] not in unique_weapon_types:
-                    unique_weapon_types.append(crime['weapon'])
-
-                if crime['weapon'] not in crime_count_by_weapon_type.keys():
-                    crime_count_by_weapon_type[crime['weapon']] = 1
-                else:
-                    crime_count_by_weapon_type[crime['weapon']] = crime_count_by_weapon_type[crime['weapon']] + 1
-
         data = {}
-        data['crimes'] = crimes
-        data['neighborhood_names'] = neighborhood_names
-        data['unique_crime_types'] = unique_crime_types
-        data['overall_crime_count_by_district'] = overall_crime_count_by_district
-        data['unique_weapon_types'] = unique_weapon_types
-        data['crime_count_by_weapon_type'] = crime_count_by_weapon_type
+
+        qryresult = db.session.query(Crime).all()
+        data["crimes"] = [i.serialized for i in qryresult]
+        qryresult = db.session.query(Weekday).all()
+        data["weekday"] = [i.serialized for i in qryresult]
+        qryresult = db.session.query(Description).all()
+        data["description"] = [i.serialized for i in qryresult]
+        qryresult = db.session.query(Weapon).all()
+        data["weapon"] = [i.serialized for i in qryresult]
+        qryresult = db.session.query(District).all()
+        data["district"] = [i.serialized for i in qryresult]
+        qryresult = db.session.query(Neighborhood).all()
+        data["neighborhood"] = [i.serialized for i in qryresult]
+        qryresult = db.session.query(Premise).all()
+        data["premise"] = [i.serialized for i in qryresult]
 
         return jsonify(data)
 
