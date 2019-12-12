@@ -30,18 +30,42 @@ def all_crimes():
 
         qryresult = db.session.query(Crime).all()
         data["crimes"] = [i.serialized for i in qryresult]
+
+        wd_dict = {}
         qryresult = db.session.query(Weekday).all()
-        data["weekday"] = [i.serialized for i in qryresult]
+        for i in qryresult:
+            wd_dict.update(i.serialized)
+        data["weekday"] = wd_dict
+        
+        dc_dict = {}
         qryresult = db.session.query(Description).all()
-        data["description"] = [i.serialized for i in qryresult]
+        for i in qryresult:
+            dc_dict.update(i.serialized)
+        data["description"] = dc_dict
+
+        wp_dict = {}
         qryresult = db.session.query(Weapon).all()
-        data["weapon"] = [i.serialized for i in qryresult]
+        for i in qryresult:
+            wp_dict.update(i.serialized)
+        data["weapon"] = wp_dict
+
+        ds_dict = {}
         qryresult = db.session.query(District).all()
-        data["district"] = [i.serialized for i in qryresult]
+        for i in qryresult:
+            ds_dict.update(i.serialized)
+        data["district"] = ds_dict
+
+        nh_dict = {}
         qryresult = db.session.query(Neighborhood).all()
-        data["neighborhood"] = [i.serialized for i in qryresult]
+        for i in qryresult:
+            nh_dict.update(i.serialized)
+        data["neighborhood"] = nh_dict
+
+        pr_dict = {}
         qryresult = db.session.query(Premise).all()
-        data["premise"] = [i.serialized for i in qryresult]
+        for i in qryresult:
+            pr_dict.update(i.serialized)
+        data["premise"] = pr_dict
 
         return jsonify(data)
 
