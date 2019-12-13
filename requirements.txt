@@ -4,3 +4,4 @@ flask-sqlalchemy
 mysql-python
 python-dotenv
 alembic
+pytest
