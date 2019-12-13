@@ -110,12 +110,12 @@ componentDidMount() {
         filterData.push(pushdata);
         }
         this.props.typeOptions = [... filterData];
-        console.log(process.env.REACT_APP_GOOGLE_MAP_API_KEY);
+        
     return (
       // Important! Always set the container height explicitly
       <div style={{ height: '80vh', width: '75%' }}>
         <GoogleMapReact
-          bootstrapURLKeys={{ key: "AIzaSyC35-l6-ZU04_xf6l_mIUcbFPT9lWzhxq0" }}
+          bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAP_API_KEY }}
           defaultCenter={this.props.center}
           defaultZoom={this.props.zoom}
           heatmapLibrary={true}

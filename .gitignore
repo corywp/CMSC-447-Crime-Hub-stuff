@@ -6,3 +6,6 @@ react_frontend/node_modules
 # Ignore compiled python elements
 __pycache__
 *.pyc
+
+#Ignore environmental variable
+react_frontend/.env
