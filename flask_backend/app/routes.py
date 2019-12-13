@@ -36,7 +36,7 @@ def all_crimes():
         for i in qryresult:
             wd_dict.update(i.serialized)
         data["weekday"] = wd_dict
-        
+
         dc_dict = {}
         qryresult = db.session.query(Description).all()
         for i in qryresult:
