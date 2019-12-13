@@ -1,7 +1,7 @@
 # Ignore compiled react elements
 flask_backend/app/static/react
 flask_backend/app/templates/index.html
-react_frontend/node_modules
+node_modules
 
 # Ignore compiled python elements
 __pycache__
