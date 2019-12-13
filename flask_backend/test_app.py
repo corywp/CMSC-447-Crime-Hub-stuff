@@ -14,13 +14,13 @@ class TestApp(unittest.TestCase):
             os.remove('app/test_app.db')
         shutil.copyfile('app/app.db', 'app/test_app.db')
         app.app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir + '/app/', 'test_app.db')
-        
+
         self.app = app.app.test_client()
 
     def test_app_runs(self):
         response = self.app.get('/', follow_redirects=True)
         self.assertEqual(response.status_code, 200)
-        
+
     def test_get_all_crimes(self):
         response = self.app.get('/api/crimes', follow_redirects=True)
         self.assertEqual(response.status_code, 200)
@@ -73,9 +73,3 @@ class TestApp(unittest.TestCase):
         response = self.app.post('/api/crimes', follow_redirects=True, json=bad_format)
 
         self.assertEqual(response.status_code, 500)
-
-    def test_delete(self):
-        response = self.app.delete('/api/crimes', follow_redirects=True)
-
-        self.assertEqual(response.status_code, 200)
-        
