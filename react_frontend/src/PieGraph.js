@@ -49,15 +49,15 @@ class PieGraph extends React.Component{
         return <div>Loading...</div>;
       } else {
             var xydata = [];
-            var unique_weapon_types = "";
-            var crime_count_by_weapon_type = 0;
-            for (var i = 0; i < data.unique_weapon_types.length; i++) {
-            var newdata = {x: data.unique_weapon_types[i], y: data.crime_count_by_weapon_type[data.unique_weapon_types[i]]};
-
+            var unique_weapon_types = [];
+            var vals = Object.values(data.weapon);
+            unique_weapon_types = Object.keys(data.weapon);
+            for(var i = 0; i < unique_weapon_types.length; i++)
+            {
+              var newdata = {x: unique_weapon_types[i], y: vals[i]};
             xydata.push(newdata);
-        }
+          }
         this.state.graphData = [... xydata];
-
         return (
     <PieChart
       data={this.makeGraph()}

@@ -49,12 +49,12 @@ class LineGraph extends React.Component{
       return <div>Loading...</div>;
     } else {
           var xydata = [];
-          var unique_weapon_types = "";
-          var crime_count_by_weapon_type = 0;
-          for (var i = 0; i < data.neighborhood_names.length; i++) {
-          var newdata = {x: data.neighborhood_names[i], y: data.overall_crime_count_by_district[data.neighborhood_names[i]]};
+          var unique_districts = [];
+          for (var i = 0; i < 100; i++) {
+          var newdata = {x: i, y: 100-i};
+
           xydata.push(newdata);
-      }
+          }
       this.state.graphData = [... xydata];
   return (
     <LineChart
