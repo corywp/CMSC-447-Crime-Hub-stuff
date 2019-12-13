@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Select, { components } from 'react-select';
 import GoogleMapReact from 'google-map-react';
+require('dotenv').config()
+
 
 const AnyReactComponent = ({ text }) => <div>{text}</div>;
 const DropdownIndicator = (
@@ -108,6 +110,7 @@ componentDidMount() {
         filterData.push(pushdata);
         }
         this.props.typeOptions = [... filterData];
+        console.log(process.env.REACT_APP_GOOGLE_MAP_API_KEY);
     return (
       // Important! Always set the container height explicitly
       <div style={{ height: '80vh', width: '75%' }}>
@@ -117,10 +120,29 @@ componentDidMount() {
           defaultZoom={this.props.zoom}
           heatmapLibrary={true}
           heatmap={this.state.dataPoints}
-
         >
 
         </GoogleMapReact>
+
+        //Crime type
+        <Select
+          closeMenuOnSelect={false}
+          components={{ DropdownIndicator }}
+          isMulti
+          options={this.props.typeOptions}
+          onChange={this.updateFilter}
+        />
+
+        //Month
+        <Select
+          closeMenuOnSelect={false}
+          components={{ DropdownIndicator }}
+          isMulti
+          options={this.props.typeOptions}
+          onChange={this.updateFilter}
+        />
+
+        //Year
         <Select
           closeMenuOnSelect={false}
           components={{ DropdownIndicator }}

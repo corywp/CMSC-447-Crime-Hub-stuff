@@ -1,5 +1,15 @@
 import React from "react";
+import Select, { components } from 'react-select';
 import { LineChart } from "react-d3-components";
+const DropdownIndicator = (
+  props: ElementConfig<typeof components.DropdownIndicator>
+) => {
+  return (
+    <components.DropdownIndicator {...props}>
+    </components.DropdownIndicator>
+  );
+};
+
 class LineGraph extends React.Component{
   constructor(props)
   {
@@ -57,12 +67,41 @@ class LineGraph extends React.Component{
           }
       this.state.graphData = [... xydata];
   return (
+    <div>
     <LineChart
       data={this.makeGraph()}
       width={400}
       height={400}
       margin={{ top: 10, bottom: 50, left: 50, right: 10 }}
     />
+
+    //Neighborhood
+    <Select
+      closeMenuOnSelect={false}
+      components={{ DropdownIndicator }}
+      isMulti
+      options={this.props.typeOptions}
+      onChange={this.updateFilter}
+    />
+
+    //Month
+    <Select
+      closeMenuOnSelect={false}
+      components={{ DropdownIndicator }}
+      isMulti
+      options={this.props.typeOptions}
+      onChange={this.updateFilter}
+    />
+
+    //Year
+    <Select
+      closeMenuOnSelect={false}
+      components={{ DropdownIndicator }}
+      isMulti
+      options={this.props.typeOptions}
+      onChange={this.updateFilter}
+    />
+  </div>
   );
 }
 }

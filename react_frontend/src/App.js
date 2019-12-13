@@ -10,6 +10,7 @@ var origin = window.location.origin;
 var url = origin + '/api/crimes'
 
 
+
 class GetCrimes extends React.Component {
   constructor(props) {
     super(props);
