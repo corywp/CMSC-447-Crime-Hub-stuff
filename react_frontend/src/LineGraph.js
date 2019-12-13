@@ -58,13 +58,15 @@ class LineGraph extends React.Component{
     } else if (!isLoaded) {
       return <div>Loading...</div>;
     } else {
-          var xydata = [];
-          var unique_districts = [];
-          for (var i = 0; i < 100; i++) {
-          var newdata = {x: i, y: 100-i};
+          // var xydata = [];
+          var xydata = [{x:"jan", y:267}, {x:"feb", y:354}, {x:"march", y:288}, {x:"april", y:300}, {x:"may", y:360}, {x:"june", y:480},
+          {x:"jul", y:575}, {x:"aug", y:620}, {x:"sept", y:540}, {x:"oct", y:410}, {x:"nov", y:360}, {x:"dec", y:380}]
+          // var unique_districts = [];
+          // for (var i = 0; i < 100; i++) {
+          // var newdata = {x: i, y: 100-i};
 
-          xydata.push(newdata);
-          }
+          // xydata.push(newdata);
+          // }
       this.state.graphData = [... xydata];
       return(
         <div style={{ position:'relative', height: '100vh',
