@@ -1,28 +1,20 @@
+from flask_api import status
 from flask import render_template, jsonify, request
 from app import app, db
 from app.models import Crime, Weekday, Description, Weapon
 from app.models import District, Neighborhood, Premise
-import json
-
-@app.route('/')
-@app.route('/index')
-@app.route('/index/')
-def index():
-    members = [
-        {'first_name': 'Chloe', 'last_name': 'Jew'},
-        {'first_name': 'Kendall', 'last_name': 'Kempton'},
-        {'first_name': 'Tj', 'last_name': 'Ngo'},
-        {'first_name': 'Cory', 'last_name': 'Powell'},
-        {'first_name': 'Scott', 'last_name': 'Keegan'}
-    ]
-
-    return render_template('index.html', title='Home', members=members, token="My Token")
+import json, os
 
 
 # Handles calls to entire database
 @app.route('/api/crimes', methods=['GET', 'POST', 'DELETE'])
 @app.route('/api/crimes/', methods=['GET', 'POST', 'DELETE'])
 def all_crimes():
+
+    if not request.json:
+        return {"ERROR":"UNAUTHORIZED"}, status.HTTP_401_UNAUTHORIZED
+    elif request.json["key"] != app.config["API_KEY"]:
+        return {"ERROR":"UNAUTHORIZED"}, status.HTTP_401_UNAUTHORIZED
 
     # Retrieve all Crime objects in database
     if request.method == 'GET':
@@ -84,15 +76,3 @@ def all_crimes():
             db.session.delete(crime)
         db.session.commit()
         return jsonify([i.serialized for i in qryresult])
-
-
-# Handles references to Crime object based on crimedate
-@app.route('/api/crimedate=<date>', methods=['GET'])
-@app.route('/api/crimedate=<date>/', methods=['GET'])
-def get_crime_crimedate(date):
-
-    # Retrieve a Crime object based on its crimedate
-    if request.method == 'GET':
-        qryresult = db.session.query(Crime).filter(Crime.crimedate==date)
-        # Return the object
-        return jsonify([i.serialized for i in qryresult.all()])
