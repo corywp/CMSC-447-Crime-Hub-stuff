@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Select, { components } from 'react-select';
 import GoogleMapReact from 'google-map-react';
+require('dotenv').config()
+
 
 const AnyReactComponent = ({ text }) => <div>{text}</div>;
 const DropdownIndicator = (
@@ -26,8 +28,15 @@ class Map extends Component {
       error: null,
       isLoaded: false,
       data: [],
-      selectedOption: null
-
+      selectedOption: [],
+      dataPoints: {
+    positions: [
+    ],
+    options: {
+      radius: 89,
+      gradient: g,
+    }
+  },
     };
   }
   static defaultProps = {
@@ -36,15 +45,9 @@ class Map extends Component {
       lng: -76.6131
     },
     zoom: 13,
-    data: {
-  positions: [
-  ],
-  options: {
-    radius: 89,
-    gradient: g,
-  }
-},
+
   typeOptions: [],
+
 }
 componentDidMount() {
   fetch("http://127.0.0.1:3000/api/crimes")
@@ -66,8 +69,20 @@ componentDidMount() {
         });
       }
     )
-}
 
+}
+  setData(positions)
+  {
+    this.state.dataPoints["positions"] = positions;
+    return(
+      this.state.dataPoints["positions"]
+    );
+  }
+    updateFilter = (event) => {
+        this.setState({
+            selectedOption: event
+        });
+    }
   render() {
     const { error, isLoaded, data } = this.state;
     if (error) {
@@ -77,23 +92,25 @@ componentDidMount() {
     } else {
           var xydata = [];
           var filterData = [];
-          var unique_weapon_types = "";
           var crime_count_by_weapon_type = 0;
+          var vals = Object.values(data.description);
+          var unique_crime_types = Object.keys(data.description);
           for (var i = 0; i < data.crimes.length; i++) {
-          var newdata = {lat: data.crimes[i]["latitude"], lng: data.crimes[i]["longitude"]};
-            if(this.state.selectedOption === null)
-            {
+              var newdata = {lat: data.crimes[i]["latitude"], lng: data.crimes[i]["longitude"]};
               xydata.push(newdata);
-            }
-          }
-        this.props.data["positions"] = [... xydata];
 
-        for (var i = 0; i < data.unique_crime_types.length; i++) {
-          var pushdata = {value: data.unique_crime_types[i], label: data.unique_crime_types[i]};
+        }
+
+        this.state.dataPoints["positions"] = [... xydata];
+        this.setData(xydata);
+        this.state.graphData = [... xydata];
+
+        for (var i = 0; i < unique_crime_types.length; i++) {
+          var pushdata = {value: unique_crime_types[i], label: unique_crime_types[i]};
         filterData.push(pushdata);
         }
         this.props.typeOptions = [... filterData];
-        console.log(this.state.selectedOption);
+        console.log(process.env.REACT_APP_GOOGLE_MAP_API_KEY);
     return (
       // Important! Always set the container height explicitly
       <div style={{ height: '80vh', width: '75%' }}>
@@ -102,14 +119,36 @@ componentDidMount() {
           defaultCenter={this.props.center}
           defaultZoom={this.props.zoom}
           heatmapLibrary={true}
-          heatmap={this.props.data}
+          heatmap={this.state.dataPoints}
         >
+
         </GoogleMapReact>
+
+        //Crime type
         <Select
           closeMenuOnSelect={false}
           components={{ DropdownIndicator }}
           isMulti
           options={this.props.typeOptions}
+          onChange={this.updateFilter}
+        />
+
+        //Month
+        <Select
+          closeMenuOnSelect={false}
+          components={{ DropdownIndicator }}
+          isMulti
+          options={this.props.typeOptions}
+          onChange={this.updateFilter}
+        />
+
+        //Year
+        <Select
+          closeMenuOnSelect={false}
+          components={{ DropdownIndicator }}
+          isMulti
+          options={this.props.typeOptions}
+          onChange={this.updateFilter}
         />
       </div>
 

@@ -1,5 +1,15 @@
 import React from "react";
+import Select, { components } from 'react-select';
 import { LineChart } from "react-d3-components";
+const DropdownIndicator = (
+  props: ElementConfig<typeof components.DropdownIndicator>
+) => {
+  return (
+    <components.DropdownIndicator {...props}>
+    </components.DropdownIndicator>
+  );
+};
+
 class LineGraph extends React.Component{
   constructor(props)
   {
@@ -49,20 +59,49 @@ class LineGraph extends React.Component{
       return <div>Loading...</div>;
     } else {
           var xydata = [];
-          var unique_weapon_types = "";
-          var crime_count_by_weapon_type = 0;
-          for (var i = 0; i < data.neighborhood_names.length; i++) {
-          var newdata = {x: data.neighborhood_names[i], y: data.overall_crime_count_by_district[data.neighborhood_names[i]]};
+          var unique_districts = [];
+          for (var i = 0; i < 100; i++) {
+          var newdata = {x: i, y: 100-i};
+
           xydata.push(newdata);
-      }
+          }
       this.state.graphData = [... xydata];
   return (
+    <div>
     <LineChart
       data={this.makeGraph()}
       width={400}
       height={400}
       margin={{ top: 10, bottom: 50, left: 50, right: 10 }}
     />
+
+    //Neighborhood
+    <Select
+      closeMenuOnSelect={false}
+      components={{ DropdownIndicator }}
+      isMulti
+      options={this.props.typeOptions}
+      onChange={this.updateFilter}
+    />
+
+    //Month
+    <Select
+      closeMenuOnSelect={false}
+      components={{ DropdownIndicator }}
+      isMulti
+      options={this.props.typeOptions}
+      onChange={this.updateFilter}
+    />
+
+    //Year
+    <Select
+      closeMenuOnSelect={false}
+      components={{ DropdownIndicator }}
+      isMulti
+      options={this.props.typeOptions}
+      onChange={this.updateFilter}
+    />
+  </div>
   );
 }
 }

@@ -36,7 +36,7 @@ class BarGraph extends React.Component{
 
       makeGraph() {
         var data = {
-          label: 'Weapon Distribution',
+          label: 'Crime by District',
           values: this.state.graphData
         };
         return (data);
@@ -49,12 +49,16 @@ class BarGraph extends React.Component{
       return <div>Loading...</div>;
     } else {
           var xydata = [];
-          var unique_weapon_types = "";
-          var crime_count_by_weapon_type = 0;
-          for (var i = 0; i < data.neighborhood_names.length; i++) {
-          var newdata = {x: data.neighborhood_names[i], y: data.overall_crime_count_by_district[data.neighborhood_names[i]]};
+          var unique_districts = [];
+          var vals = Object.values(data.district);
+          unique_districts = Object.keys(data.district);
+          for(var i = 0; i < unique_districts.length; i++)
+          {
+            var newdata = {x: unique_districts[i], y: vals[i]};
+          
           xydata.push(newdata);
-      }
+        }
+          xydata.push(newdata);
       this.state.graphData = [... xydata];
   return (
     <BarChart
