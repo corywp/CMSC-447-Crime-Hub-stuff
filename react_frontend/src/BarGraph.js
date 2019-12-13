@@ -55,19 +55,27 @@ class BarGraph extends React.Component{
           for(var i = 0; i < unique_districts.length; i++)
           {
             var newdata = {x: unique_districts[i], y: vals[i]};
-          
+
           xydata.push(newdata);
         }
           xydata.push(newdata);
       this.state.graphData = [... xydata];
-  return (
-    <BarChart
-      data={this.makeGraph()}
-      width={400}
-      height={400}
-      margin={{ top: 10, bottom: 50, left: 50, right: 10 }}
-    />
-  );
+      return (
+        <div style={{ position:'relative', height: '100vh',
+         width: '100%', top:'70vh'}}>
+         <header>
+           <h1>Crime Totals by District</h1>
+           </header>
+        <BarChart
+          data={this.makeGraph()}
+          width={1200}
+          height={650}
+          margin={{ top: 5, bottom: 50, left: 50, right: 10 }}
+        >
+        </BarChart>
+        </div>
+      );
+
 }
 }
 }

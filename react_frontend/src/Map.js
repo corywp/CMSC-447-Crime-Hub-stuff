@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Select, { components } from 'react-select';
 import GoogleMapReact from 'google-map-react';
-require('dotenv').config()
 
 
 const AnyReactComponent = ({ text }) => <div>{text}</div>;
@@ -110,49 +109,49 @@ componentDidMount() {
         filterData.push(pushdata);
         }
         this.props.typeOptions = [... filterData];
-        
-    return (
-      // Important! Always set the container height explicitly
-      <div style={{ height: '80vh', width: '75%' }}>
-        <GoogleMapReact
-          bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAP_API_KEY }}
-          defaultCenter={this.props.center}
-          defaultZoom={this.props.zoom}
-          heatmapLibrary={true}
-          heatmap={this.state.dataPoints}
-        >
 
-        </GoogleMapReact>
+        return (
+          // Important! Always set the container height explicitly
+          <div style={{ height: '100vh', width: '100%' }}>
+            <GoogleMapReact
+              bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAP_API_KEY }}
+              defaultCenter={this.props.center}
+              defaultZoom={this.props.zoom}
+              heatmapLibrary={true}
+              heatmap={this.state.dataPoints}
+            >
 
-        //Crime type
-        <Select
-          closeMenuOnSelect={false}
-          components={{ DropdownIndicator }}
-          isMulti
-          options={this.props.typeOptions}
-          onChange={this.updateFilter}
-        />
+            </GoogleMapReact>
 
-        //Month
-        <Select
-          closeMenuOnSelect={false}
-          components={{ DropdownIndicator }}
-          isMulti
-          options={this.props.typeOptions}
-          onChange={this.updateFilter}
-        />
+            Crime type
+            <Select
+              closeMenuOnSelect={false}
+              components={{ DropdownIndicator }}
+              isMulti
+              options={this.props.typeOptions}
+              onChange={this.updateFilter}
+            />
 
-        //Year
-        <Select
-          closeMenuOnSelect={false}
-          components={{ DropdownIndicator }}
-          isMulti
-          options={this.props.typeOptions}
-          onChange={this.updateFilter}
-        />
-      </div>
+            Month
+            <Select
+              closeMenuOnSelect={false}
+              components={{ DropdownIndicator }}
+              isMulti
+              options={this.props.typeOptions}
+              onChange={this.updateFilter}
+            />
 
-    );
+            Year
+            <Select
+              closeMenuOnSelect={false}
+              components={{ DropdownIndicator }}
+              isMulti
+              options={this.props.typeOptions}
+              onChange={this.updateFilter}
+            />
+          </div>
+
+        );
   }
 }
 }

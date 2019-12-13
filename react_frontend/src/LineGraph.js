@@ -66,16 +66,21 @@ class LineGraph extends React.Component{
           xydata.push(newdata);
           }
       this.state.graphData = [... xydata];
-  return (
-    <div>
-    <LineChart
-      data={this.makeGraph()}
-      width={400}
-      height={400}
-      margin={{ top: 10, bottom: 50, left: 50, right: 10 }}
-    />
+      return(
+        <div style={{ position:'relative', height: '100vh',
+        top:'35vh',width: '100%'}}>
+        <header>
+          <h1>Crime Totals over Time</h1>
+          </header>
+        <LineChart
+          data={this.makeGraph()}
+          width={1260}
+          height={600}
+          margin={{ top: 10, bottom: 50, left: 50, right: 10 }}
+        >
+        </LineChart>
 
-    //Neighborhood
+    Neighborhood
     <Select
       closeMenuOnSelect={false}
       components={{ DropdownIndicator }}
@@ -84,7 +89,7 @@ class LineGraph extends React.Component{
       onChange={this.updateFilter}
     />
 
-    //Month
+    Month
     <Select
       closeMenuOnSelect={false}
       components={{ DropdownIndicator }}
@@ -93,7 +98,7 @@ class LineGraph extends React.Component{
       onChange={this.updateFilter}
     />
 
-    //Year
+    Year
     <Select
       closeMenuOnSelect={false}
       components={{ DropdownIndicator }}

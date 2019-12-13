@@ -59,13 +59,21 @@ class PieGraph extends React.Component{
           }
         this.state.graphData = [... xydata];
         return (
+          <div style={{ position:'relative', height: '100vh',
+           width: '100%', top:'90vh'}}>
+           <header>
+             <h1>Crime Totals by Weapon Type</h1>
+             </header>
     <PieChart
       data={this.makeGraph()}
-      width={400}
-      height={400}
-      margin={{ top: 10, bottom: 50, left: 50, right: 10 }}
-    />
+      width={600}
+      height={600}
+      margin={{ top: 5,bottom: 50, left: 100, right: 100 }}
+    >
+    </PieChart>
+</div>
   );
+
 }
 }
 }

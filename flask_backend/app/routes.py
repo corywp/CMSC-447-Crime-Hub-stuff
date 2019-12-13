@@ -5,16 +5,20 @@ from app.models import Crime, Weekday, Description, Weapon
 from app.models import District, Neighborhood, Premise
 import json, os
 
-
+@app.route('/')
+@app.route('/index')
+@app.route('/index/')
+def index():
+    return render_template('index.html')
 # Handles calls to entire database
 @app.route('/api/crimes', methods=['GET', 'POST', 'DELETE'])
 @app.route('/api/crimes/', methods=['GET', 'POST', 'DELETE'])
 def all_crimes():
 
-    if not request.json:
-        return {"ERROR":"UNAUTHORIZED"}, status.HTTP_401_UNAUTHORIZED
-    elif request.json["key"] != app.config["API_KEY"]:
-        return {"ERROR":"UNAUTHORIZED"}, status.HTTP_401_UNAUTHORIZED
+    #if not request.json:
+        #return {"ERROR":"UNAUTHORIZED"}, status.HTTP_401_UNAUTHORIZED
+    #elif request.json["key"] != app.config["API_KEY"]:
+        #return {"ERROR":"UNAUTHORIZED"}, status.HTTP_401_UNAUTHORIZED
 
     # Retrieve all Crime objects in database
     if request.method == 'GET':
