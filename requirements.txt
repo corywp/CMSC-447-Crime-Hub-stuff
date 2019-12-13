@@ -1,6 +1,7 @@
 flask
 flask-migrate
 flask-sqlalchemy
+flask_api
 mysql-python
 python-dotenv
 alembic
